@@ -76,11 +76,17 @@ function setupLoginEvent() {
         if (errorMsg) errorMsg.innerText = "";
 
         try {
-            await signInWithEmailAndPassword(auth, email, pass);
+    // 👉 THÊM 2 DÒNG NÀY ĐỂ ÉP BỎ MÀN HÌNH ĐĂNG NHẬP NGAY LẬP TỨC KHI ĐĂNG NHẬP THÀNH CÔNG:
+            const loginOverlay = document.getElementById('login-overlay');
+            if (loginOverlay) loginOverlay.style.display = 'none';
+            document.body.classList.remove('login-locked');
+
         } catch (error) {
+            console.error("Lỗi đăng nhập:", error);
             if (errorMsg) errorMsg.innerText = "Tài khoản hoặc mật khẩu không chính xác!";
         } finally {
-            if (btnLogin) { btnLogin.innerText = "Đăng nhập"; btnLogin.disabled = false; }
+            btnLogin.innerText = "Đăng nhập";
+            btnLogin.disabled = false;
         }
     };
 
