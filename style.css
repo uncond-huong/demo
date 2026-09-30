@@ -1,0 +1,783 @@
+/* 1. Import Font nghệ thuật Caveat lên đầu file */
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@600&display=swap');
+
+/* 2. Khai báo bảng màu Pastel chuẩn */
+:root {
+  --bg-main: #F8F4EA;     /* Nền kem nhạt */
+  --pink-card: #FDE9EE;   /* Hồng nhạt (Nhật Bản) */
+  --green-card: #E8F3E6;  /* Xanh nhạt (Việt Nam) */ 
+  --text-main: #4A3E3D;   /* Chữ xám trầm sang trọng */
+  --text-sub: #8D808D;    /* Chữ phụ */
+  --primary-pink: #FF7B9C;
+}
+
+/* 3. Cấu hình chung cho toàn trang web */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Be Vietnam Pro', sans-serif;
+  background-color: var(--bg-main);
+  color: var(--text-main);
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+}
+
+/* Khóa cuộn trang tuyệt đối khi đang hiện Màn hình Đăng nhập */
+body.login-locked {
+  overflow: hidden !important;
+  height: 100vh !important;
+}
+
+.app-container {
+  width: 100%;
+  max-width: 430px;
+  margin: 0 auto;
+  padding: 0 16px 90px 16px; /* Padding bottom 90px để tránh che bởi Bottom Nav */
+  position: relative;
+}
+
+/* ==================== 4. STYLES TOP HEADER ==================== */
+.top-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 0;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.menu-icon-btn {
+    background: none;
+    border: none;
+    font-size: 22px;
+    padding: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.greeting-box {
+    display: flex;
+    flex-direction: column;
+}
+
+.greeting-title {
+    font-size: 24px;
+    font-weight: 700;
+    color: #4A3E3D;
+    margin: 0;
+    font-family: 'Caveat', cursive;
+}
+
+.greeting-title span {
+    font-style: italic;
+    color: #D86B85;
+}
+
+.greeting-subtitle {
+    font-size: 0.75rem;
+    color: #8C8C8C;
+    margin: 2px 0 0 0;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+/* Nút chuông thông báo */
+.notif-btn {
+    position: relative;
+    background: #FFFFFF;
+    border: none;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+    cursor: pointer;
+}
+
+.notif-badge {
+    position: absolute;
+    top: 8px;
+    right: 9px;
+    width: 7px;
+    height: 7px;
+    background: #FF5A79;
+    border-radius: 50%;
+    border: 1.5px solid #FFFFFF;
+}
+
+/* Avatar & Bong bóng suy nghĩ */
+.user-profile-bar {
+    display: flex;
+    align-items: center;
+}
+
+.avatar-wrapper {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.user-avatar-img {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #FFD1DC;
+}
+
+.thought-bubble {
+    position: absolute;
+    top: -12px;
+    right: -10px;
+    background: #FFFFFF;
+    border: 1.5px solid #FFD1DC;
+    border-radius: 12px;
+    padding: 2px 8px;
+    font-size: 0.72rem;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    white-space: nowrap;
+    z-index: 2;
+    color: #4A4A4A;
+}
+
+.thought-bubble::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 10px;
+    width: 6px;
+    height: 6px;
+    background: #FFFFFF;
+    border-right: 1.5px solid #FFD1DC;
+    border-bottom: 1.5px solid #FFD1DC;
+    transform: rotate(45deg);
+}
+
+@keyframes popIn {
+    0% { transform: scale(0); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+/* ==================== 5. NÚT BẤM NỔI (FAB +) ==================== */
+.fab-add-btn {
+    position: fixed;
+    bottom: 82px;
+    right: 20px;
+    width: 54px;
+    height: 54px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #FF9EAA 0%, #E85D75 100%);
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 20px rgba(232, 93, 117, 0.4);
+    cursor: pointer;
+    z-index: 99;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.fab-add-btn:active {
+    transform: scale(0.92);
+    box-shadow: 0 4px 10px rgba(232, 93, 117, 0.3);
+}
+
+/* ==================== 6. MAIN CONTAINER ==================== */
+.main-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* ==================== 7. THIẾT KẾ ĐỒNG HỒ KÉP ==================== */
+
+@import './components/clock/clock.css';
+
+/* ==================== 8. THANH TIẾN ĐỘ ==================== */
+.progress-card {
+  background-color: #FFFFFF;
+  border-radius: 16px;
+  padding: 14px 16px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
+}
+.progress-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+#progress-text {
+  color: #D86B85;
+  font-weight: 700;
+}
+.progress-track {
+  width: 100%;
+  height: 10px;
+  background-color: var(--pink-card);
+  border-radius: 10px;
+  overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #A7C4A1, #F7C6D6);
+  border-radius: 10px;
+  transition: width 0.6s ease-in-out;
+}
+
+/* ==================== 9. KHOẢNH KHẮC / NHẬT KÝ ==================== */
+.moments-section {
+  background: #FFFFFF;
+  border-radius: 20px;
+  padding: 14px;
+}
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.section-title {
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--text-main);
+}
+.see-all {
+  font-size: 0.78rem;
+  color: var(--text-sub);
+  text-decoration: none;
+}
+
+.moments-scroll-container {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  align-items: center;
+  scroll-behavior: smooth;
+}
+.moments-scroll-container::-webkit-scrollbar { display: none; }
+
+.moment-add-card {
+  min-width: 85px;
+  height: 110px;
+  border: 2px dashed #F7C6D6;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  background: #FFFDFE;
+  color: #D86B85;
+  font-size: 0.72rem;
+  font-weight: 600;
+  box-sizing: border-box;
+}
+.plus-icon { font-size: 1.3rem; margin-bottom: 2px; }
+
+.moment-item {
+    width: 85px;             /* Chiều rộng cố định bằng ô Thêm ảnh */
+    height: 110px;           /* Chiều cao cố định bằng ô Thêm ảnh */
+    flex-shrink: 0;          /* Không bị co giãn */
+    border-radius: 12px;     /* Bo góc mềm mại */
+    overflow: hidden;        /* Cắt phần ảnh thừa */
+    box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+}
+
+.moment-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;       /* Căn chỉnh ảnh lấp đầy khung */
+}
+
+/* ==================== 10. FEED BÀI VIẾT ==================== */
+.posts-section {
+  width: 100%;
+}
+.tab-bar {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+.tab-btn {
+  background: #FFFFFF;
+  border: none;
+  padding: 6px 14px;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  color: var(--text-sub);
+  cursor: pointer;
+}
+.tab-btn.active {
+  background: #FF7B9C;
+  color: white;
+  font-weight: bold;
+}
+
+.post-card {
+  background-color: #FFFFFF;
+  border-radius: 16px;
+  padding: 14px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+  margin-bottom: 12px;
+}
+.post-user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+.user-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #FFF0F5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+}
+.user-meta { display: flex; flex-direction: column; }
+.user-name { font-weight: 700; font-size: 0.88rem; }
+.post-time { font-size: 0.72rem; color: var(--text-sub); }
+
+/* Avatar người đăng bài viết */
+.post-avatar-img {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1.5px solid #FFD1DC;
+    flex-shrink: 0;
+}
+
+.post-body p {
+  margin: 0 0 10px 0;
+  font-size: 0.88rem;
+  line-height: 1.4;
+}
+.post-img-box {
+  width: 100%;
+  height: 180px;
+  background-color: var(--bg-main);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-sub);
+  font-size: 0.85rem;
+  border: 1px dashed #E0D8CE;
+}
+
+.post-footer {
+  display: flex;
+  gap: 15px;
+  margin-top: 10px;
+}
+.btn-like, .btn-comment {
+  background: none;
+  border: none;
+  font-size: 0.85rem;
+  cursor: pointer;
+  color: #666;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* ==================== 11. BOTTOM NAV ==================== */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 65px;
+  background-color: #FFFFFF;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.05);
+  z-index: 1000;
+  max-width: 430px;
+  margin: 0 auto;
+}
+.nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  font-size: 0.7rem;
+  color: var(--text-sub);
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+.nav-item.active {
+  color: #D86B85;
+  font-weight: 700;
+}
+.nav-icon { font-size: 1.2rem; }
+
+/* ==================== 12. MÀN HÌNH ĐĂNG BÀI TOÀN MÀN HÌNH ==================== */
+.post-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: #FFFDF8;
+    z-index: 999;
+    display: flex;
+    flex-direction: column;
+    transform: translateY(100%);
+    transition: transform 0.3s ease-in-out;
+}
+
+.post-screen.active {
+    transform: translateY(0);
+}
+
+.post-screen-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+}
+
+.icon-btn {
+    background: none;
+    border: none;
+    font-size: 1.4rem;
+    cursor: pointer;
+    color: #4A4A4A;
+}
+
+.submit-text-btn {
+    background: none;
+    border: none;
+    color: #FF7B9C;
+    font-weight: bold;
+    font-size: 1.1rem;
+    cursor: pointer;
+}
+
+.post-screen-body {
+    padding: 0 20px;
+    flex: 1;
+    overflow-y: auto;
+}
+
+#post-screen-text {
+    width: 100%;
+    height: 120px;
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: 1rem;
+    resize: none;
+    color: #4A4A4A;
+    line-height: 1.5;
+    box-sizing: border-box;
+}
+
+.image-preview-container img, 
+.image-preview-container video {
+    width: 100%;
+    max-height: 200px;
+    object-fit: cover;
+    border-radius: 12px;
+    margin-top: 10px;
+}
+
+.attach-options {
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+    margin: 20px 0;
+    padding: 14px 0;
+    background: #FAFAFA;
+    border-radius: 16px;
+}
+
+.attach-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 0.85rem;
+    color: #555;
+    cursor: pointer;
+}
+
+.attach-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    margin-bottom: 6px;
+}
+
+.bg-orange { background-color: #FFF2E5; }
+.bg-pink   { background-color: #FFEBF0; }
+
+.post-settings {
+    border-top: 1px dashed #EAEAEA;
+    padding-top: 12px;
+}
+
+.setting-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.setting-right {
+    color: #FF7B9C;
+    font-weight: 500;
+}
+
+.lotus-footer-bg {
+    height: 90px;
+    background-image: url('https://uncond-huong.github.io/hikari-app/lotus-illustration.png');
+    background-repeat: repeat-x;
+    background-position: bottom center;
+    background-size: contain;
+    pointer-events: none;
+}
+
+/* ==================== 13. POPUP CẢM XÚC & ĐỔI MẬT KHẨU ==================== */
+.status-modal-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    display: flex; justify-content: center; align-items: center;
+    z-index: 1000;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.2s ease;
+}
+
+.status-modal-overlay.active {
+    opacity: 1; pointer-events: auto;
+}
+
+.status-modal-content {
+    background: #FFFDF8;
+    width: 85%; max-width: 320px;
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+}
+
+.status-modal-content h4 {
+    margin-top: 0; color: #4A4A4A; font-size: 1rem; text-align: center;
+}
+
+#input-user-status {
+    width: 100%; padding: 10px 12px;
+    border: 1.5px solid #FFD1DC; border-radius: 10px;
+    outline: none; margin: 12px 0; font-size: 0.9rem;
+    box-sizing: border-box;
+}
+
+.quick-emojis {
+    display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 15px;
+}
+
+.emoji-chip {
+    background: #FFF0F5; color: #555;
+    padding: 4px 10px; border-radius: 12px;
+    font-size: 0.8rem; cursor: pointer;
+}
+
+.status-modal-actions {
+    display: flex; justify-content: flex-end; gap: 10px;
+}
+
+.btn-cancel { background: none; border: none; color: #888; cursor: pointer; }
+.btn-save { background: #FF7B9C; color: white; border: none; padding: 6px 14px; border-radius: 10px; font-weight: bold; cursor: pointer; }
+
+/* ==========================================
+   14. MÀN HÌNH ĐĂNG NHẬP (LOGIN OVERLAY)
+   ========================================== */
+.login-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    background: #FFF9F5;
+    z-index: 999999; /* Đẩy lên trên cùng mọi thành phần */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.login-card {
+    background: #FFFFFF;
+    padding: 30px 24px;
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+    width: 100%;
+    max-width: 360px;
+    text-align: center;
+}
+
+.login-title {
+    color: #4A4A4A;
+    font-size: 20px;
+    margin-bottom: 8px;
+}
+
+.login-subtitle {
+    color: #8C8C8C;
+    font-size: 13px;
+    margin-bottom: 20px;
+}
+
+.login-input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 12px;
+    border: 1px solid #EAEAEA;
+    border-radius: 10px;
+    outline: none;
+    box-sizing: border-box;
+    font-size: 14px;
+    transition: border-color 0.2s ease;
+}
+
+.login-input:focus {
+    border-color: #FF9EAA;
+}
+
+#login-pass {
+    margin-bottom: 16px;
+}
+
+.btn-login {
+    width: 100%;
+    padding: 12px;
+    background: #FF9EAA;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-weight: bold;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.btn-login:hover {
+    background: #FF8595;
+}
+
+.login-error-msg {
+    color: #FF5A5A;
+    font-size: 12px;
+    margin-top: 12px;
+    min-height: 16px;
+}
+
+/* ==========================================
+   15. TOAST NOTIFICATION KIỂU FACEBOOK
+   ========================================== */
+.fb-toast {
+    position: fixed;
+    bottom: 80px; /* Nằm phía trên Bottom Nav */
+    left: 50%;
+    transform: translateX(-50%) translateY(60px);
+    background: rgba(30, 30, 30, 0.88);
+    color: #ffffff;
+    padding: 10px 18px;
+    border-radius: 25px;
+    font-size: 13px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    z-index: 10000;
+    opacity: 0;
+    transition: transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.35s ease;
+    pointer-events: none;
+    white-space: nowrap;
+}
+
+.fb-toast.show {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+}
+
+/* Trạng thái đã thả tim */
+.btn-like.liked {
+    color: #FF4757 !important;
+    font-weight: bold;
+}
+
+/* Kiểu dáng từng dòng bình luận */
+.comment-item-box {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    background: #F7F5F0;
+    padding: 8px 12px;
+    border-radius: 12px;
+}
+.comment-user-avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+.comment-content-box {
+    display: flex;
+    flex-direction: column;
+}
+.comment-author-name {
+    font-weight: bold;
+    font-size: 12px;
+    color: #4A3E3D;
+}
+.comment-text-body {
+    font-size: 13px;
+    color: #333333;
+    margin-top: 2px;
+    line-height: 1.3;
+}
+
+

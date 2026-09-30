@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HIKARI-Space</title>
+
+    <!-- 1. Kết nối Font chữ Be Vietnam Pro từ Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- 2. Kết nối tệp CSS -->
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="FF9EAA">
+</head>
+<body class="login-locked">
+
+  <!-- MÀN HÌNH ĐĂNG NHẬP PHỦ TOÀN TRANG -->
+  <div id="login-overlay" class="login-overlay">
+    <div class="login-card">
+      <h2 class="login-title">🌸 HIKARI Space 🌸</h2>
+      <p class="login-subtitle">Vui lòng đăng nhập bằng tài khoản được cấp</p>
+
+      <input type="email" id="login-email" class="login-input" placeholder="Email / Tên tài khoản">
+      <input type="password" id="login-pass" class="login-input" placeholder="Mật khẩu">
+
+      <button type="button" id="btn-login-submit" class="btn-login">Đăng nhập</button>
+
+      <p id="login-error-msg" class="login-error-msg"></p>
+    </div>
+  </div>
+
+  <div class="app-container">
+    <header class="top-header">
+      <div class="header-left">
+        <button class="menu-icon-btn" id="open-sidebar">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="2.2" stroke-linecap="round">
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+        <div class="greeting-box">
+          <h1 class="greeting-title">Xin chào, <span id="user-name"></span>👋</h1>
+          <p class="greeting-subtitle">Cùng nhau chia sẻ mỗi ngày 🌸</p>
+        </div>
+      </div>
+
+      <div class="header-right">
+          <!-- Nút Chuông có chấm đỏ -->
+          <button class="notif-btn" id="notif-btn">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#4A4A4A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                  <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+              </svg>
+              <span class="notif-badge"></span>
+          </button>
+          
+          <!-- Avatar & Cảm xúc -->
+          <div class="user-profile-bar">
+            <div class="avatar-wrapper" id="my-avatar-wrapper" title="Bấm để cập nhật trạng thái / avatar">
+              <div id="my-status-bubble" class="thought-bubble">📚 Đang học bài</div>
+              <img src="https://ui-avatars.com/api/?name=Ouji&background=FF9EAA&color=fff" alt="Avatar của tôi" class="user-avatar-img" id="my-avatar-img">
+            </div>
+            <!-- Input chọn ảnh Avatar ẩn -->
+            <input type="file" id="avatar-file-input" accept="image/*" style="display: none;">
+          </div>
+      </div>
+    </header>
+
+    <!-- Nút Nổi Đăng bài viết (FAB) -->
+    <button class="fab-add-btn" id="fab-post-btn">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round">
+          <line x1="12" y1="5" x2="12" y2="19"></line>
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+      </svg>
+    </button>
+
+    <main class="main-container">
+
+      <!-- 1. KHỐI ĐỒNG HỒ KÉP (VN & JP) -->
+      <section class="clock-container">
+        <!-- Đồng hồ Việt Nam -->
+        <div class="clock-card vn-card">
+          <div class="floral-bg floral-sen">🪷</div>
+          
+          <div class="card-header">
+            <span class="header-icon">🪷</span>
+            <div class="header-text">
+              <div class="country-name">Việt Nam</div>
+              <div class="flower-name">Hoa Sen</div>
+            </div>
+          </div>
+
+          <div class="clock-circle" id="clock-face-vn">
+            <div class="clock-pattern sen-pattern"></div>
+            
+            <div class="hand hour-hand" id="vn-hour"></div>
+            <div class="hand minute-hand" id="vn-minute"></div>
+            <div class="hand second-hand vn-second-color" id="vn-second"></div>
+            <div class="clock-center-dot"></div>
+          </div>
+
+          <div class="digital-time vn-text-color" id="vn-digital">00:00:00</div>
+          <div class="date-text" id="vn-date">Thứ...,--/--/--</div>
+          <div class="utc-badge vn-badge">UTC+7</div>
+        </div>
+
+        <!-- Đồng hồ Nhật Bản -->
+        <div class="clock-card jp-card">
+          <div class="floral-bg floral-sakura">🌸</div>
+          
+          <div class="card-header">
+            <span class="header-icon">🌸</span>
+            <div class="header-text">
+              <div class="country-name">Nhật Bản</div>
+              <div class="flower-name">Hoa Anh Đào</div>
+            </div>
+          </div>
+
+          <div class="clock-circle" id="clock-face-jp">
+            <div class="clock-pattern sakura-pattern"></div>
+
+            <div class="hand hour-hand" id="jp-hour"></div>
+            <div class="hand minute-hand" id="jp-minute"></div>
+            <div class="hand second-hand jp-second-color" id="jp-second"></div>
+            <div class="clock-center-dot"></div>
+          </div>
+
+          <div class="digital-time jp-text-color" id="jp-digital">00:00:00</div>
+          <div class="date-text" id="jp-date">Thứ...,--/--/--</div>
+          <div class="utc-badge jp-badge">UTC+9</div>
+        </div>
+      </section>
+
+      <!-- 2. THẺ THANH TIẾN ĐỘ -->
+      <section class="progress-card">
+        <div class="progress-header">
+          <span>🌸 Hành trình 3 năm của Hime</span>
+          <span id="progress-text">0.00%</span>
+        </div>
+        <div class="progress-track">
+          <div class="progress-fill" id="progress-fill"></div>
+        </div>
+      </section>
+
+      <!-- 3. DÒNG NHẬT KÝ CHUNG -->
+      <section class="moments-section">
+        <div class="section-header">
+          <span class="section-title">Dòng nhật ký chung</span>
+          <a href="javascript:void(0)" class="see-all">Xem tất cả ></a>
+        </div>
+        
+        <!-- Khung danh sách ảnh (Để rỗng cho JS tự vẽ) -->
+        <div class="moments-scroll-container" id="moments-list"></div>
+
+        <!-- Input chọn file nhật ký ẩn -->
+        <input type="file" id="moment-file-input" accept="image/*" style="display: none;">
+      </section>
+
+      <!-- 4. DANH SÁCH BÀI VIẾT (FEED) -->
+      <section class="posts-section">
+        <div class="tab-bar">
+          <button class="tab-btn active">Tất cả</button>
+          <button class="tab-btn">Bài viết</button>
+          <button class="tab-btn">Thông báo</button>
+        </div>
+
+        <!-- Khung chứa bài viết nạp Realtime từ Firebase -->
+        <div class="feed-container" id="feed-posts"></div>
+        
+      </section>
+    </main>
+
+    <!-- THANH BOTTOM NAV -->
+    <nav class="bottom-nav">
+      <button type="button" class="nav-item active" data-target="home-section">
+        <span class="nav-icon">🏠</span>
+        <span class="nav-label">Trang chủ</span>
+      </button>
+      <button type="button" class="nav-item" id="btn-open-post">
+        <span class="nav-icon">📷</span>
+        <span class="nav-label">Khoảnh khắc</span>
+      </button>
+      <button type="button" class="nav-item" data-target="about-section">
+        <span class="nav-icon">🤝</span>
+        <span class="nav-label">Chúng mình</span>
+      </button>
+    </nav>
+
+    <!-- MÀN HÌNH ĐĂNG BÀI VIẾT TOÀN MÀN HÌNH -->
+    <div id="create-post-screen" class="post-screen">
+      <div class="post-screen-header">
+        <button id="btn-back-post" class="icon-btn">←</button>
+        <h3>Đăng bài mới</h3>
+        <button id="btn-submit-screen-post" class="submit-text-btn">Đăng</button>
+      </div>
+
+      <div class="post-screen-body">
+        <textarea id="post-screen-text" placeholder="Admin luôn ở đây..."></textarea>
+        <div id="post-screen-preview" class="image-preview-container"></div>
+        
+        <div class="attach-options">
+          <label class="attach-item">
+            <input type="file" id="post-file-image" accept="image/*" multiple hidden>
+            <div class="attach-icon bg-orange">🖼️</div>
+            <span>Ảnh</span>
+          </label>
+          <label class="attach-item">
+            <input type="file" id="post-file-video" accept="video/*" hidden>
+            <div class="attach-icon bg-pink">🎥</div>
+            <span>Video</span>
+          </label>
+        </div>
+
+        <div class="post-settings">
+          <div class="setting-row">
+            <div class="setting-left">🌸 <span>Gửi tới</span></div>
+            <div class="setting-right">Nhóm HIKARI</div>
+          </div>        
+        </div>
+      </div>
+
+      <div class="lotus-footer-bg"></div>
+    </div>
+
+    <!-- POPUP CẢM XÚC & CÀI ĐẶT TÀI KHOẢN -->
+    <div id="status-modal" class="status-modal-overlay">
+      <div class="status-modal-content">
+        <h4>Bạn đang cảm thấy thế nào? 💭</h4>
+        
+        <!-- Nút Chọn ảnh Avatar mới -->
+        <button type="button" id="btn-trigger-change-avatar" style="width: 100%; padding: 8px; margin-bottom: 10px; background: #FFF0F2; color: #FF7B98; border: 1px dashed #FF9EAA; border-radius: 10px; font-weight: bold; cursor: pointer;">
+          📷 Chọn ảnh đại diện mới
+        </button>
+
+        <input type="text" id="input-display-name" placeholder="Tên" maxlength="25" style="width: 100%; padding: 10px 12px; border: 1.5px solid #FFD1DC; border-radius: 1opx; outline: none; margin-bottom: 8px; font-size: 0.9rem; box-sizing: border-box;">
+
+        <input type="text" id="input-user-status" placeholder="Cho bọn tui biết bạn cảm thấy thế nào..." maxlength="30">
+        
+        <div class="quick-emojis">
+          <span class="emoji-chip">😴 Buồn ngủ</span>
+          <span class="emoji-chip">🤒 Bị bệnh</span>
+          <span class="emoji-chip">📚 Đang học bài</span>
+          <span class="emoji-chip">🧋 Thèm trà sữa</span>
+          <span class="emoji-chip">🪷 Nhớ nhà</span>
+        </div>
+
+        <div style="margin-top: 10px; margin-bottom: 10px; text-align: center;">
+          <button type="button" id="btn-open-change-pass" onclick="if(window.openChangePasswordModal) window.openChangePasswordModal()" style="background: none; border: none; color: #888; font-size: 12px; text-decoration: underline; cursor: pointer;">🔑 Đổi mật khẩu cá nhân</button>
+        </div>
+
+        <div class="status-modal-actions">
+          <button id="btn-close-status" class="btn-cancel">Hủy</button>
+          <button id="btn-save-status" class="btn-save">Cập nhật</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- POPUP ĐỔI MẬT KHẨU -->
+    <div id="change-pass-modal" class="status-modal-overlay">
+      <div class="status-modal-content" style="max-width: 320px;">
+        <h4>Đổi mật khẩu mới</h4>
+        <p style="font-size: 12px; color: #777; margin-bottom: 12px;">Đổi mật khẩu riêng để bảo mật tài khoản 100%</p>
+        
+        <input type="password" id="input-old-pass" placeholder="Mật khẩu hiện tại" style="width: 100%; padding: 10px; margin-bottom: 8px; border: 1px solid #ddd; border-radius: 8px; outline: none; box-sizing: border-box;">
+        <input type="password" id="input-new-pass" placeholder="Mật khẩu mới (ít nhất 6 ký tự)" style="width: 100%; padding: 10px; margin-bottom: 8px; border: 1px solid #ddd; border-radius: 8px; outline: none; box-sizing: border-box;">
+        <input type="password" id="input-confirm-pass" placeholder="Nhập lại mật khẩu mới" style="width: 100%; padding: 10px; margin-bottom: 12px; border: 1px solid #ddd; border-radius: 8px; outline: none; box-sizing: border-box;">
+        
+        <p id="change-pass-msg" style="font-size: 12px; margin-bottom: 10px; min-height: 16px;"></p>
+
+        <div class="status-modal-actions">
+          <button id="btn-close-pass-modal" class="btn-cancel">Hủy</button>
+          <button id="btn-save-new-pass" class="btn-save">Lưu mật khẩu</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- POPUP BÌNH LUẬN BÀI VIẾT -->
+<div id="comment-modal" class="status-modal-overlay">
+  <div class="status-modal-content" style="max-width: 360px; max-height: 80vh; display: flex; flex-direction: column;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+      <h4 style="margin: 0;">💬 Bình luận</h4>
+      <button id="btn-close-comment" class="btn-cancel" style="font-size: 18px; font-weight: bold;">✕</button>
+    </div>
+    
+    <!-- Danh sách bình luận cuộn được -->
+    <div id="comment-list" style="flex: 1; overflow-y: auto; max-height: 260px; margin-bottom: 12px; display: flex; flex-direction: column; gap: 10px;"></div>
+    
+    <!-- Ô nhập bình luận -->
+    <div style="display: flex; gap: 8px;">
+      <input type="text" id="input-comment-text" placeholder="Viết bình luận..." style="flex: 1; padding: 10px; border: 1.5px solid #FFD1DC; border-radius: 10px; outline: none; font-size: 13px;">
+      <button id="btn-send-comment" class="btn-save" style="white-space: nowrap;">Gửi</button>
+    </div>
+  </div>
+</div>
+
+    <!-- TOAST NOTIFICATION KIỂU FACEBOOK -->
+    <div id="toast-notification" class="fb-toast">
+      <span id="toast-icon">✨</span>
+      <span id="toast-message">Đã thêm 1 tấm ảnh vào Dòng nhật ký!</span>
+    </div>
+
+  </div>
+
+  <!-- 3. Kết nối tệp JavaScript -->
+  <script type="module" src="script.js?v=999"></script>
+</body>
+</html>
