@@ -1,6 +1,6 @@
 /* 1. Import Font nghệ thuật Caveat lên đầu file */
 @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@600&display=swap');
-@import './component/clock/clock.css'; /* Import CSS đồng hồ từ component/clock/clock.css */
+@import url('./component/clock/clock.css'); /* Import CSS đồng hồ từ component/clock/clock.css */
 
 /* 2. Khai báo bảng màu Pastel chuẩn */
 :root {
