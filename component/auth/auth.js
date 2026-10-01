@@ -100,6 +100,14 @@ export function initAuth(onAuthSuccess) {
             });
 
             if (onAuthSuccess) onAuthSuccess(user);
+        onSnapshot(doc(db, "user_status", user.uid), (docSnap) => {
+            const myStatusBubble = document.getElementById('my-status-bubble');
+            if (docSnap.exists() && docSnap.data().status && myStatusBubble) {
+                myStatusBubble.innerText = docSnap.data().status;
+                myStatusBubble.style.display = 'block';
+            }
+        });
+
         } else {
             if (loginOverlay) loginOverlay.style.display = 'flex';
             document.body.classList.add('login-locked');
