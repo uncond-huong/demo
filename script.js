@@ -69,11 +69,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 60000);
 
     // Sự kiện đổi trạng thái, avatar & mật khẩu
-    document.addEventListener("DOMContentLoaded", () => {
     setupStatusModalEvents();     
     setupAvatarEvents();         
     setupChangePasswordEvents();    
-});
 
     // PWA Service Worker
     if ('serviceWorker' in navigator) {
