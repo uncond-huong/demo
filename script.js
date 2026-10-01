@@ -3,7 +3,7 @@
 // ==========================================
 
 // script.js
-import { buildClockTicks, updateClockWidget } from '/component/clock/clock.js';
+import { buildClockTicks, updateClockWidget } from './component/clock/clock.js';
 import { updateProgressBar } from './component/utils/helpers.js';
 import { initAuth, setupProfileEvents } from './component/auth/auth.js';
 import { 
