@@ -1,8 +1,6 @@
 import { 
     auth,
     db, 
-    uploadToCloudinary,
-    showToast,
     EmailAuthProvider,
     reauthenticateWithCredential,
     updatePassword,
@@ -10,6 +8,8 @@ import {
     setDoc, 
     serverTimestamp 
 } from "../../firebase.js";
+import { showToast } from "../utils/helpers.js";
+import { uploadToCloudinary } from "../utils/cloudinary.js";
 
 function setupStatusModalEvents() {
     const myAvatarWrapper = document.getElementById('my-avatar-wrapper');
