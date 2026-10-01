@@ -49,6 +49,11 @@ document.addEventListener("DOMContentLoaded", () => {
     setupNavigation();
     setupProfileEvents();
 
+    // Sự kiện đổi trạng thái, avatar & mật khẩu
+    setupStatusModalEvents();     
+    setupAvatarEvents();         
+    setupChangePasswordEvents();  
+
     // Sự kiện Đăng bài & Bình luận
     setupCreatePostEvents();
     setupCommentEvents();
@@ -66,12 +71,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Tự động cập nhật lại thời gian bài viết mỗi 60s
     setInterval(() => {
         listenToPostsRealtime();
-    }, 60000);
-
-    // Sự kiện đổi trạng thái, avatar & mật khẩu
-    setupStatusModalEvents();     
-    setupAvatarEvents();         
-    setupChangePasswordEvents();    
+    }, 60000);  
 
     // PWA Service Worker
     if ('serviceWorker' in navigator) {
