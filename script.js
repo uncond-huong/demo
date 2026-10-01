@@ -14,6 +14,7 @@ import {
     setupMomentUploadListener,
     listenToPostsRealtime
 } from './component/post/post.js';
+import { setupStatusModalEvents, setupAvatarEvents, setupChangePasswordEvents } from './component/profile.js';
 
 // 1. Đồng hồ
 function initClocks() {
@@ -65,6 +66,13 @@ document.addEventListener("DOMContentLoaded", () => {
     setInterval(() => {
         listenToPostsRealtime();
     }, 60000);
+
+    // Sự kiện đổi trạng thái, avatar & mật khẩu
+    document.addEventListener("DOMContentLoaded", () => {
+    setupStatusModalEvents();     
+    setupAvatarEvents();         
+    setupChangePasswordEvents();    
+});
 
     // PWA Service Worker
     if ('serviceWorker' in navigator) {
