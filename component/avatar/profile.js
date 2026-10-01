@@ -1,3 +1,13 @@
+import { 
+    auth, 
+    db, 
+    uploadToCloudinary,
+    showToast,
+    doc, 
+    setDoc, 
+    serverTimestamp 
+} from "../../firebase.js";
+
 function setupStatusModalEvents() {
     const myAvatarWrapper = document.getElementById('my-avatar-wrapper');
     const statusModal = document.getElementById('status-modal');
