@@ -2,9 +2,10 @@
 // FILE CHÍNH KHỞI CHẠY HIKARI SPACE
 // ==========================================
 
-import { buildClockTicks, updateClockWidget } from './components/clock/clock.js';
-import { updateProgressBar } from './components/utils/helpers.js';
-import { initAuth, setupProfileEvents } from './components/auth/auth.js';
+// script.js
+import { buildClockTicks, updateClockWidget } from '/component/clock/clock.js';
+import { updateProgressBar } from './component/utils/helpers.js';
+import { initAuth, setupProfileEvents } from './component/auth/auth.js';
 import { 
     setupCreatePostEvents, 
     setupCommentEvents, 
@@ -12,7 +13,7 @@ import {
     listenToMomentsRealtime, 
     setupMomentUploadListener,
     listenToPostsRealtime
-} from './components/post/post.js';
+} from './component/post/post.js';
 
 // 1. Đồng hồ
 function initClocks() {

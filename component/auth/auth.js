@@ -1,4 +1,16 @@
-import { auth, db, signInWithEmailAndPassword, signOut, onAuthStateChanged, doc, setDoc, onSnapshot, serverTimestamp } from "../../firebase.js";
+// components/auth/auth.js
+import { 
+    auth, 
+    db, 
+    signInWithEmailAndPassword, 
+    signOut, 
+    onAuthStateChanged, 
+    doc, 
+    setDoc, 
+    onSnapshot, 
+    serverTimestamp 
+} from "../../firebase.js";
+
 import { showToast } from "../utils/helpers.js";
 import { uploadToCloudinary } from "../utils/cloudinary.js";
 
@@ -13,11 +25,8 @@ const ALLOWED_EMAILS = [
 export let currentUserName = "Thành viên";
 export let currentAvatarUrl = "";
 
-// ==========================================
-// 1. TỰ ĐỘNG GẮN SỰ KIỆN ĐĂNG NHẬP NGAY LẬP TỨC (GLOBAL EVENT DELEGATION)
-// ==========================================
+// 1. Tự động gắn sự kiện Đăng nhập (Global Event Delegation)
 document.addEventListener('click', async (e) => {
-    // Kiểm tra nếu click vào đúng nút Đăng nhập hoặc phần tử bên trong nút đó
     const btnLogin = e.target.closest('#btn-login-submit');
     if (!btnLogin) return;
 
@@ -41,12 +50,9 @@ document.addEventListener('click', async (e) => {
 
     try {
         await signInWithEmailAndPassword(auth, email, pass);
-        
-        // Đăng nhập thành công -> Ép ẩn overlay ngay lập tức
         const loginOverlay = document.getElementById('login-overlay');
         if (loginOverlay) loginOverlay.style.display = 'none';
         document.body.classList.remove('login-locked');
-
     } catch (error) {
         console.error("Lỗi đăng nhập:", error);
         if (errorMsg) errorMsg.innerText = "Tài khoản hoặc mật khẩu không chính xác!";
@@ -56,9 +62,7 @@ document.addEventListener('click', async (e) => {
     }
 });
 
-// ==========================================
-// 2. KHỞI TẠO LẮNG NGHE TRẠNG THÁI AUTH
-// ==========================================
+// 2. Lắng nghe trạng thái đăng nhập
 export function initAuth(onAuthSuccess) {
     onAuthStateChanged(auth, async (user) => {
         const loginOverlay = document.getElementById('login-overlay');
@@ -103,6 +107,7 @@ export function initAuth(onAuthSuccess) {
     });
 }
 
+// 3. Sự kiện đổi tên, trạng thái & avatar
 export function setupProfileEvents() {
     const btnSaveStatus = document.getElementById('btn-save-status');
     const btnChangeAvatar = document.getElementById('btn-trigger-change-avatar');
