@@ -10,6 +10,7 @@ import {
 } from "../../firebase.js";
 import { showToast } from "../utils/helpers.js";
 import { uploadToCloudinary } from "../utils/cloudinary.js";
+import { currentUserName } from "../auth/auth.js";
 
 function setupStatusModalEvents() {
     const myAvatarWrapper = document.getElementById('my-avatar-wrapper');
