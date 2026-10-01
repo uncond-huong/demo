@@ -1,8 +1,11 @@
 import { 
-    auth, 
+    auth,
     db, 
     uploadToCloudinary,
     showToast,
+    EmailAuthProvider,
+    reauthenticateWithCredential,
+    updatePassword,
     doc, 
     setDoc, 
     serverTimestamp 
