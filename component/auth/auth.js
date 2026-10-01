@@ -1,4 +1,4 @@
-import { auth, db, signInWithEmailAndPassword, signOut, onAuthStateChanged, doc, setDoc, onSnapshot, serverTimestamp, EmailAuthProvider, reauthenticateWithCredential, updatePassword } from "../../firebase.js";
+import { auth, db, signInWithEmailAndPassword, signOut, onAuthStateChanged, doc, setDoc, onSnapshot, serverTimestamp } from "../../firebase.js";
 import { showToast } from "../utils/helpers.js";
 import { uploadToCloudinary } from "../utils/cloudinary.js";
 
@@ -13,9 +13,53 @@ const ALLOWED_EMAILS = [
 export let currentUserName = "Thành viên";
 export let currentAvatarUrl = "";
 
+// ==========================================
+// 1. TỰ ĐỘNG GẮN SỰ KIỆN ĐĂNG NHẬP NGAY LẬP TỨC (GLOBAL EVENT DELEGATION)
+// ==========================================
+document.addEventListener('click', async (e) => {
+    // Kiểm tra nếu click vào đúng nút Đăng nhập hoặc phần tử bên trong nút đó
+    const btnLogin = e.target.closest('#btn-login-submit');
+    if (!btnLogin) return;
+
+    e.preventDefault();
+
+    const emailInput = document.getElementById('login-email');
+    const passInput = document.getElementById('login-pass');
+    const errorMsg = document.getElementById('login-error-msg');
+
+    const email = emailInput ? emailInput.value.trim() : '';
+    const pass = passInput ? passInput.value.trim() : '';
+
+    if (!email || !pass) {
+        if (errorMsg) errorMsg.innerText = "Vui lòng nhập đầy đủ Email và Mật khẩu!";
+        return;
+    }
+
+    btnLogin.innerText = "Đang kiểm tra...";
+    btnLogin.disabled = true;
+    if (errorMsg) errorMsg.innerText = "";
+
+    try {
+        await signInWithEmailAndPassword(auth, email, pass);
+        
+        // Đăng nhập thành công -> Ép ẩn overlay ngay lập tức
+        const loginOverlay = document.getElementById('login-overlay');
+        if (loginOverlay) loginOverlay.style.display = 'none';
+        document.body.classList.remove('login-locked');
+
+    } catch (error) {
+        console.error("Lỗi đăng nhập:", error);
+        if (errorMsg) errorMsg.innerText = "Tài khoản hoặc mật khẩu không chính xác!";
+    } finally {
+        btnLogin.innerText = "Đăng nhập";
+        btnLogin.disabled = false;
+    }
+});
+
+// ==========================================
+// 2. KHỞI TẠO LẮNG NGHE TRẠNG THÁI AUTH
+// ==========================================
 export function initAuth(onAuthSuccess) {
-    setupLoginEvent();
-    
     onAuthStateChanged(auth, async (user) => {
         const loginOverlay = document.getElementById('login-overlay');
         const errorMsg = document.getElementById('login-error-msg');
@@ -57,41 +101,6 @@ export function initAuth(onAuthSuccess) {
             document.body.classList.add('login-locked');
         }    
     });
-}
-
-function setupLoginEvent() {
-    const btnLogin = document.getElementById('btn-login-submit');
-    const handleLogin = async (e) => {
-        if (e) e.preventDefault();
-        const email = document.getElementById('login-email')?.value.trim();
-        const pass = document.getElementById('login-pass')?.value.trim();
-        const errorMsg = document.getElementById('login-error-msg');
-
-        if (!email || !pass) {
-            if (errorMsg) errorMsg.innerText = "Vui lòng nhập đầy đủ Email và Mật khẩu!";
-            return;
-        }
-
-        if (btnLogin) { btnLogin.innerText = "Đang kiểm tra..."; btnLogin.disabled = true; }
-        if (errorMsg) errorMsg.innerText = "";
-
-        try {
-    // 👉 THÊM 2 DÒNG NÀY ĐỂ ÉP BỎ MÀN HÌNH ĐĂNG NHẬP NGAY LẬP TỨC KHI ĐĂNG NHẬP THÀNH CÔNG:
-            const loginOverlay = document.getElementById('login-overlay');
-            if (loginOverlay) loginOverlay.style.display = 'none';
-            document.body.classList.remove('login-locked');
-
-        } catch (error) {
-            console.error("Lỗi đăng nhập:", error);
-            if (errorMsg) errorMsg.innerText = "Tài khoản hoặc mật khẩu không chính xác!";
-        } finally {
-            btnLogin.innerText = "Đăng nhập";
-            btnLogin.disabled = false;
-        }
-    };
-
-    if (btnLogin) btnLogin.addEventListener('click', handleLogin);
-    window.login = handleLogin; // Bảo hiểm nếu HTML xài onclick
 }
 
 export function setupProfileEvents() {
