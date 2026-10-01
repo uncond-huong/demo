@@ -6,6 +6,7 @@
 import { buildClockTicks, updateClockWidget } from './component/clock/clock.js';
 import { updateProgressBar } from './component/utils/helpers.js';
 import { initAuth, setupProfileEvents } from './component/auth/auth.js';
+import { setupStatusModalEvents, setupAvatarEvents, setupChangePasswordEvents } from './component/avatar/profile.js';
 import { 
     setupCreatePostEvents, 
     setupCommentEvents, 
@@ -14,7 +15,7 @@ import {
     setupMomentUploadListener,
     listenToPostsRealtime
 } from './component/post/post.js';
-import { setupStatusModalEvents, setupAvatarEvents, setupChangePasswordEvents } from './component/profile.js';
+
 
 // 1. Đồng hồ
 function initClocks() {
