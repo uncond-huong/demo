@@ -1,0 +1,194 @@
+/* ==================== STYLES TOP HEADER ==================== */
+.top-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 0;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.menu-icon-btn {
+    background: none;
+    border: none;
+    font-size: 22px;
+    padding: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.greeting-box {
+    display: flex;
+    flex-direction: column;
+}
+
+.greeting-title {
+    font-size: 24px;
+    font-weight: 700;
+    color: #4A3E3D;
+    margin: 0;
+    font-family: 'Caveat', cursive;
+}
+
+.greeting-title span {
+    font-style: italic;
+    color: #D86B85;
+}
+
+.greeting-subtitle {
+    font-size: 0.75rem;
+    color: #8C8C8C;
+    margin: 2px 0 0 0;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+/* Nút chuông thông báo */
+.notif-btn {
+    position: relative;
+    background: #FFFFFF;
+    border: none;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+    cursor: pointer;
+}
+
+.notif-badge {
+    position: absolute;
+    top: 8px;
+    right: 9px;
+    width: 7px;
+    height: 7px;
+    background: #FF5A79;
+    border-radius: 50%;
+    border: 1.5px solid #FFFFFF;
+}
+
+/* Avatar & Bong bóng suy nghĩ */
+.user-profile-bar {
+    display: flex;
+    align-items: center;
+}
+
+.avatar-wrapper {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.user-avatar-img {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #FFD1DC;
+}
+
+.thought-bubble {
+    position: absolute;
+    top: -12px;
+    right: -10px;
+    background: #FFFFFF;
+    border: 1.5px solid #FFD1DC;
+    border-radius: 12px;
+    padding: 2px 8px;
+    font-size: 0.72rem;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    white-space: nowrap;
+    z-index: 2;
+    color: #4A4A4A;
+}
+
+.thought-bubble::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 10px;
+    width: 6px;
+    height: 6px;
+    background: #FFFFFF;
+    border-right: 1.5px solid #FFD1DC;
+    border-bottom: 1.5px solid #FFD1DC;
+    transform: rotate(45deg);
+}
+
+@keyframes popIn {
+    0% { transform: scale(0); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+/* ==================== NÚT BẤM NỔI (FAB +) ==================== */
+.fab-add-btn {
+    position: fixed;
+    bottom: 82px;
+    right: 20px;
+    width: 54px;
+    height: 54px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #FF9EAA 0%, #E85D75 100%);
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 20px rgba(232, 93, 117, 0.4);
+    cursor: pointer;
+    z-index: 99;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.fab-add-btn:active {
+    transform: scale(0.92);
+    box-shadow: 0 4px 10px rgba(232, 93, 117, 0.3);
+}
+
+/* ==================== BOTTOM NAV ==================== */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 65px;
+  background-color: #FFFFFF;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.05);
+  z-index: 1000;
+  max-width: 430px;
+  margin: 0 auto;
+}
+
+.nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  font-size: 0.7rem;
+  color: var(--text-sub);
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.nav-item.active {
+  color: #D86B85;
+  font-weight: 700;
+}
+
+.nav-icon { font-size: 1.2rem; }
