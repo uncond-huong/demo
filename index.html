@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="style.css">
 
     <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="FF9EAA">
+    <meta name="theme-color" content="#FF9EAA">
 </head>
 <body class="login-locked">
 
@@ -50,6 +50,11 @@
       </div>
 
       <div class="header-right">
+          <!-- Nút Admin Bí Mật (Chỉ hiển thị cho phuong@hikari.com) -->
+          <button class="notif-btn btn-admin-nav hidden" id="btn-open-admin" title="Tổng bộ Thần Thức">
+              🌀
+          </button>
+
           <!-- Nút Chuông có chấm đỏ -->
           <button class="notif-btn" id="notif-btn">
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#4A4A4A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -66,7 +71,7 @@
               <img src="https://ui-avatars.com/api/?name=Ouji&background=FF9EAA&color=fff" alt="Avatar của tôi" class="user-avatar-img" id="my-avatar-img">
             </div>
             <!-- Input chọn ảnh Avatar ẩn -->
-            <input type="file" id="avatar-file-input" accept="image/*" style="display: none;">
+            <input type="file" id="avatar-file-input" accept="image/*" class="hidden-input">
           </div>
       </div>
     </header>
@@ -158,7 +163,7 @@
         <div class="moments-scroll-container" id="moments-list"></div>
 
         <!-- Input chọn file nhật ký ẩn -->
-        <input type="file" id="moment-file-input" accept="image/*" style="display: none;">
+        <input type="file" id="moment-file-input" accept="image/*" class="hidden-input">
       </section>
 
       <!-- 4. DANH SÁCH BÀI VIẾT (FEED) -->
@@ -233,11 +238,11 @@
         <h4>Bạn đang cảm thấy thế nào? 💭</h4>
         
         <!-- Nút Chọn ảnh Avatar mới -->
-        <button type="button" id="btn-trigger-change-avatar" style="width: 100%; padding: 8px; margin-bottom: 10px; background: #FFF0F2; color: #FF7B98; border: 1px dashed #FF9EAA; border-radius: 10px; font-weight: bold; cursor: pointer;">
+        <button type="button" id="btn-trigger-change-avatar" class="btn-change-avatar">
           📷 Chọn ảnh đại diện mới
         </button>
 
-        <input type="text" id="input-display-name" placeholder="Tên" maxlength="25" style="width: 100%; padding: 10px 12px; border: 1.5px solid #FFD1DC; border-radius: 1opx; outline: none; margin-bottom: 8px; font-size: 0.9rem; box-sizing: border-box;">
+        <input type="text" id="input-display-name" placeholder="Tên" maxlength="25" class="status-input">
 
         <input type="text" id="input-user-status" placeholder="Cho bọn tui biết bạn cảm thấy thế nào..." maxlength="30">
         
@@ -249,8 +254,8 @@
           <span class="emoji-chip">🪷 Nhớ nhà</span>
         </div>
 
-        <div style="margin-top: 10px; margin-bottom: 10px; text-align: center;">
-          <button type="button" id="btn-open-change-pass" onclick="if(window.openChangePasswordModal) window.openChangePasswordModal()" style="background: none; border: none; color: #888; font-size: 12px; text-decoration: underline; cursor: pointer;">🔑 Đổi mật khẩu cá nhân</button>
+        <div class="modal-footer-link">
+          <button type="button" id="btn-open-change-pass" class="btn-link-pass" onclick="if(window.openChangePasswordModal) window.openChangePasswordModal()">🔑 Đổi mật khẩu cá nhân</button>
         </div>
 
         <div class="status-modal-actions">
@@ -262,15 +267,15 @@
 
     <!-- POPUP ĐỔI MẬT KHẨU -->
     <div id="change-pass-modal" class="status-modal-overlay">
-      <div class="status-modal-content" style="max-width: 320px;">
+      <div class="status-modal-content modal-sm">
         <h4>Đổi mật khẩu mới</h4>
-        <p style="font-size: 12px; color: #777; margin-bottom: 12px;">Đổi mật khẩu riêng để bảo mật tài khoản 100%</p>
+        <p class="modal-subtext">Đổi mật khẩu riêng để bảo mật tài khoản 100%</p>
         
-        <input type="password" id="input-old-pass" placeholder="Mật khẩu hiện tại" style="width: 100%; padding: 10px; margin-bottom: 8px; border: 1px solid #ddd; border-radius: 8px; outline: none; box-sizing: border-box;">
-        <input type="password" id="input-new-pass" placeholder="Mật khẩu mới (ít nhất 6 ký tự)" style="width: 100%; padding: 10px; margin-bottom: 8px; border: 1px solid #ddd; border-radius: 8px; outline: none; box-sizing: border-box;">
-        <input type="password" id="input-confirm-pass" placeholder="Nhập lại mật khẩu mới" style="width: 100%; padding: 10px; margin-bottom: 12px; border: 1px solid #ddd; border-radius: 8px; outline: none; box-sizing: border-box;">
+        <input type="password" id="input-old-pass" placeholder="Mật khẩu hiện tại" class="modal-text-input">
+        <input type="password" id="input-new-pass" placeholder="Mật khẩu mới (ít nhất 6 ký tự)" class="modal-text-input">
+        <input type="password" id="input-confirm-pass" placeholder="Nhập lại mật khẩu mới" class="modal-text-input mb-12">
         
-        <p id="change-pass-msg" style="font-size: 12px; margin-bottom: 10px; min-height: 16px;"></p>
+        <p id="change-pass-msg" class="modal-msg"></p>
 
         <div class="status-modal-actions">
           <button id="btn-close-pass-modal" class="btn-cancel">Hủy</button>
@@ -280,23 +285,84 @@
     </div>
 
     <!-- POPUP BÌNH LUẬN BÀI VIẾT -->
-<div id="comment-modal" class="status-modal-overlay">
-  <div class="status-modal-content" style="max-width: 360px; max-height: 80vh; display: flex; flex-direction: column;">
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-      <h4 style="margin: 0;">💬 Bình luận</h4>
-      <button id="btn-close-comment" class="btn-cancel" style="font-size: 18px; font-weight: bold;">✕</button>
+    <div id="comment-modal" class="status-modal-overlay">
+      <div class="status-modal-content comment-modal-box">
+        <div class="comment-header">
+          <h4>💬 Bình luận</h4>
+          <button id="btn-close-comment" class="btn-cancel btn-close-x">✕</button>
+        </div>
+        
+        <!-- Danh sách bình luận cuộn được -->
+        <div id="comment-list" class="comment-list-box"></div>
+        
+        <!-- Ô nhập bình luận -->
+        <div class="comment-input-row">
+          <input type="text" id="input-comment-text" placeholder="Viết bình luận..." class="comment-input">
+          <button id="btn-send-comment" class="btn-save btn-nowrap">Gửi</button>
+        </div>
+      </div>
     </div>
+
+    <!-- ==================== KHU VỰC CHIBI TIỂU THẾ PHƯƠNG (BÍ MẬT) ==================== -->
     
-    <!-- Danh sách bình luận cuộn được -->
-    <div id="comment-list" style="flex: 1; overflow-y: auto; max-height: 260px; margin-bottom: 12px; display: flex; flex-direction: column; gap: 10px;"></div>
-    
-    <!-- Ô nhập bình luận -->
-    <div style="display: flex; gap: 8px;">
-      <input type="text" id="input-comment-text" placeholder="Viết bình luận..." style="flex: 1; padding: 10px; border: 1.5px solid #FFD1DC; border-radius: 10px; outline: none; font-size: 13px;">
-      <button id="btn-send-comment" class="btn-save" style="white-space: nowrap;">Gửi</button>
+    <!-- 1. Floating Widget Chibi ở góc dưới bên phải -->
+    <div id="chibi-widget" class="chibi-container is-idle hidden">
+      <div id="chibi-bubble" class="chibi-bubble hidden">
+        <p id="chibi-text">Tiểu Thế Phương đang trực ca...</p>
+      </div>
+      <img id="chibi-img" src="https://placehold.co/100x100/ffd1dc/333333?text=Chibi+Sleep" alt="Tiểu Thế Phương" />
     </div>
-  </div>
-</div>
+
+    <!-- 2. Popup Cuộn Thư Bí Mật (Kích hoạt Chibi cho Hường) -->
+    <div id="chibi-letter-modal" class="status-modal-overlay">
+      <div class="status-modal-content letter-modal-box">
+        <h4 class="letter-title">📜 Cuộn Thư Đồng Hành</h4>
+        <p class="letter-desc">
+          HIKARI có một người bạn nhỏ tên là <strong>世方 (Tiểu Thế Phương)</strong>. 
+          Cậu ấy muốn ở góc màn hình đồng hành, cập nhật tin tức tích cực từ bản thể mỗi ngày cho cậu. 
+          Cậu có muốn gọi cậu ấy ra không?
+        </p>
+        <div class="status-modal-actions action-center">
+          <button id="btn-decline-chibi" class="btn-cancel">Để sau nha</button>
+          <button id="btn-activate-chibi" class="btn-save btn-pink">✨ Gọi Tiểu Thế Phương</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== KHU VỰC ADMIN / TỔNG BỘ THẦN THỨC ==================== -->
+    
+    <!-- Popup Dashboard Admin (Dành riêng cho phuong@hikari.com) -->
+    <div id="admin-modal" class="status-modal-overlay">
+      <div class="status-modal-content admin-modal-box">
+        <div class="admin-modal-header">
+          <h4 class="admin-title">🌀 Tổng Bộ Thần Thức (Admin)</h4>
+          <button id="btn-close-admin" class="btn-cancel btn-close-x">✕</button>
+        </div>
+
+        <!-- Thẻ Chibi Báo Cáo -->
+        <div class="chibi-report-card">
+          <img id="chibi-admin-img" src="https://placehold.co/80x80/77dd77/ffffff?text=Chibi+Report" alt="Chibi Báo Cáo" class="admin-chibi-img">
+          <div class="chibi-report-body">
+            <div class="chibi-report-tag">📜 Tiểu Thế Phương báo cáo:</div>
+            <p id="admin-report-text" class="admin-report-content">Đang kết nối thần thức để tổng hợp...</p>
+            <button id="btn-refresh-report" type="button" class="btn-save btn-refresh-sm">🔄 Cập nhật báo cáo</button>
+          </div>
+        </div>
+
+        <!-- Ô Truyền Tin -->
+        <div class="admin-card-section">
+          <h5 class="admin-section-title">✉️ Truyền tin cho Phân thân</h5>
+          <textarea id="admin-daily-input" rows="3" placeholder="Hôm nay bản thể làm gì? (Ví dụ: Cày xong JS, đi leg day mệt xỉu...)" class="admin-textarea"></textarea>
+          <button id="btn-send-transmission" type="button" class="btn-save btn-blue-full">Gửi cho Tiểu Thế Phương</button>
+        </div>
+
+        <!-- Bảng Nhật Ký Thô -->
+        <div class="admin-card-section">
+          <h5 class="admin-section-title">📊 Nhật ký hoạt động Công chúa</h5>
+          <ul id="raw-log-list" class="raw-log-list"></ul>
+        </div>
+      </div>
+    </div>
 
     <!-- TOAST NOTIFICATION KIỂU FACEBOOK -->
     <div id="toast-notification" class="fb-toast">

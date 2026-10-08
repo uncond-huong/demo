@@ -1,0 +1,325 @@
+/* ==================== UTILITY & GLOBAL HELPERS ==================== */
+.hidden {
+  display: none !important;
+}
+
+.hidden-input {
+  display: none;
+}
+
+.mb-12 {
+  margin-bottom: 12px !important;
+}
+
+/* ==================== BUTTON & HEADER STYLES ==================== */
+.btn-admin-nav {
+  background-color: #E0E7FF !important;
+}
+
+.btn-change-avatar {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  background: #FFF0F2;
+  color: #FF7B98;
+  border: 1px dashed #FF9EAA;
+  border-radius: 10px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.status-input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1.5px solid #FFD1DC;
+  border-radius: 10px;
+  outline: none;
+  margin-bottom: 8px;
+  font-size: 0.9rem;
+  box-sizing: border-box;
+}
+
+.modal-footer-link {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.btn-link-pass {
+  background: none;
+  border: none;
+  color: #888;
+  font-size: 12px;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.modal-sm {
+  max-width: 320px;
+}
+
+.modal-subtext {
+  font-size: 12px;
+  color: #777;
+  margin-bottom: 12px;
+}
+
+.modal-text-input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 8px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.modal-msg {
+  font-size: 12px;
+  margin-bottom: 10px;
+  min-height: 16px;
+}
+
+/* ==================== COMMENT MODAL STYLES ==================== */
+.comment-modal-box {
+  max-width: 360px;
+  max-height: 80vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.comment-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.comment-header h4 {
+  margin: 0;
+}
+
+.btn-close-x {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.comment-list-box {
+  flex: 1;
+  overflow-y: auto;
+  max-height: 260px;
+  margin-bottom: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.comment-input-row {
+  display: flex;
+  gap: 8px;
+}
+
+.comment-input {
+  flex: 1;
+  padding: 10px;
+  border: 1.5px solid #FFD1DC;
+  border-radius: 10px;
+  outline: none;
+  font-size: 13px;
+}
+
+.btn-nowrap {
+  white-space: nowrap;
+}
+
+/* ==================== CHIBI WIDGET STYLES ==================== */
+.chibi-container {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+#chibi-img {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+  filter: drop-shadow(0 4px 6px rgba(0,0,0,0.15));
+}
+
+.chibi-bubble {
+  background: #ffffff;
+  border: 2px solid #ffb6c1;
+  border-radius: 12px;
+  padding: 8px 12px;
+  margin-bottom: 8px;
+  max-width: 180px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  font-size: 0.85rem;
+  color: #333;
+}
+
+/* Animation cho Chibi */
+.chibi-container.is-idle #chibi-img {
+  opacity: 0.7;
+  transform: scale(0.85);
+  animation: chibiSleep 2.5s infinite ease-in-out;
+}
+
+@keyframes chibiSleep {
+  0%, 100% { transform: scale(0.85) translateY(0); }
+  50% { transform: scale(0.8) translateY(3px); opacity: 0.5; }
+}
+
+.chibi-container.is-active #chibi-img {
+  opacity: 1;
+  transform: scale(1);
+  animation: chibiHop 0.7s infinite ease-in-out;
+}
+
+@keyframes chibiHop {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-10px) rotate(-4deg); }
+}
+
+/* ==================== CHIBI LETTER MODAL STYLES ==================== */
+.letter-modal-box {
+  max-width: 330px;
+  text-align: center;
+}
+
+.letter-title {
+  color: #FF7B98;
+  margin-bottom: 8px;
+}
+
+.letter-desc {
+  font-size: 13px;
+  color: #555;
+  line-height: 1.5;
+  margin-bottom: 15px;
+}
+
+.action-center {
+  justify-content: center;
+  gap: 10px;
+}
+
+.btn-pink {
+  background: #FF7B98 !important;
+}
+
+/* ==================== ADMIN DASHBOARD STYLES ==================== */
+.admin-modal-box {
+  max-width: 380px;
+  max-height: 85vh;
+  overflow-y: auto;
+}
+
+.admin-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1.5px solid #FFD1DC;
+  padding-bottom: 8px;
+  margin-bottom: 12px;
+}
+
+.admin-title {
+  margin: 0;
+  color: #3B82F6;
+}
+
+.chibi-report-card {
+  display: flex;
+  gap: 10px;
+  background: #F0F9FF;
+  border: 1px solid #BAE6FD;
+  border-radius: 10px;
+  padding: 10px;
+  margin-bottom: 12px;
+  align-items: center;
+}
+
+.admin-chibi-img {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+}
+
+.chibi-report-body {
+  flex: 1;
+}
+
+.chibi-report-tag {
+  font-size: 11px;
+  color: #0284C7;
+  font-weight: bold;
+  margin-bottom: 4px;
+}
+
+.admin-report-content {
+  font-size: 12px;
+  color: #334155;
+  margin: 0 0 6px 0;
+  line-height: 1.4;
+}
+
+.btn-refresh-sm {
+  font-size: 10px;
+  padding: 4px 8px;
+  background: #0284C7 !important;
+}
+
+.admin-card-section {
+  background: #FFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 10px;
+  padding: 10px;
+  margin-bottom: 12px;
+}
+
+.admin-section-title {
+  margin: 0 0 6px 0;
+  font-size: 12px;
+  color: #475569;
+}
+
+.admin-textarea {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #CBD5E1;
+  border-radius: 6px;
+  font-size: 12px;
+  outline: none;
+  box-sizing: border-box;
+  resize: vertical;
+}
+
+.btn-blue-full {
+  width: 100%;
+  margin-top: 6px;
+  font-size: 12px;
+  background: #3B82F6 !important;
+}
+
+.raw-log-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  max-height: 150px;
+  overflow-y: auto;
+  font-size: 11px;
+  color: #64748b;
+}
+
+.raw-log-list li {
+  padding: 4px 0;
+  border-bottom: 1px dashed #E2E8F0;
+}
