@@ -15,11 +15,9 @@ import { showToast } from "../utils/helpers.js";
 import { uploadToCloudinary } from "../utils/cloudinary.js";
 
 const ALLOWED_EMAILS = [
-    "phuong@hikari.com",
-    "huongsoft@hikari.com",
-    "guestthao@hikari.com",
-    "guestchinh@hikari.com",
-    "guesttuong@hikari.com",
+    "testphuong@hikari.com",
+    "testhuongsoft@hikari.com",
+    "testguess@hikari.com"
 ];
 
 export let currentUserName = "Thành viên";
@@ -81,7 +79,7 @@ export function initAuth(onAuthSuccess) {
             if (loginOverlay) loginOverlay.style.display = 'none';
             document.body.classList.remove('login-locked');
 
-            onSnapshot(doc(db, "users", user.uid), (docSnap) => {
+            onSnapshot(doc(db, "users_demo", user.uid), (docSnap) => {
                 const userNameElem = document.getElementById('user-name');
                 const myAvatarImg = document.getElementById('my-avatar-img');
                 const inputDisplayName = document.getElementById('input-display-name');
@@ -100,7 +98,7 @@ export function initAuth(onAuthSuccess) {
             });
 
             if (onAuthSuccess) onAuthSuccess(user);
-        onSnapshot(doc(db, "user_status", user.uid), (docSnap) => {
+        onSnapshot(doc(db, "user_status_demo", user.uid), (docSnap) => {
             const myStatusBubble = document.getElementById('my-status-bubble');
             if (docSnap.exists() && docSnap.data().status && myStatusBubble) {
                 myStatusBubble.innerText = docSnap.data().status;
@@ -130,10 +128,10 @@ export function setupProfileEvents() {
 
             try {
                 if (newName) {
-                    await setDoc(doc(db, "users", currentUser.uid), { displayName: newName, email: currentUser.email, updatedAt: serverTimestamp() }, { merge: true });
+                    await setDoc(doc(db, "users_demo", currentUser.uid), { displayName: newName, email: currentUser.email, updatedAt: serverTimestamp() }, { merge: true });
                 }
                 if (newStatus) {
-                    await setDoc(doc(db, "user_status", currentUser.uid), { status: newStatus, updatedAt: serverTimestamp() });
+                    await setDoc(doc(db, "user_status_demo", currentUser.uid), { status: newStatus, updatedAt: serverTimestamp() });
                 }
                 showToast("Đã cập nhật thông tin thành công!", "✨");
                 document.getElementById('status-modal')?.classList.remove('active');
