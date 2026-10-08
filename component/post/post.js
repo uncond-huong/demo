@@ -13,7 +13,7 @@ let usersCache = {};
 
 // 1. LẮNG NGHE TOÀN BỘ USERS & POSTS
 export function listenToAllUsersRealtime() {
-    onSnapshot(collection(db, "users"), (snapshot) => {
+    onSnapshot(collection(db, "users_demo"), (snapshot) => {
         snapshot.forEach(docSnap => {
             usersCache[docSnap.id] = docSnap.data();
         });
@@ -22,7 +22,7 @@ export function listenToAllUsersRealtime() {
 }
 
 export function listenToPostsRealtime() {
-    const postsQuery = query(collection(db, "posts"), orderBy("createdAt", "desc"));
+    const postsQuery = query(collection(db, "posts_demo"), orderBy("createdAt", "desc"));
 
     onSnapshot(postsQuery, (snapshot) => {
         const feedContainer = document.getElementById('feed-posts');
@@ -150,7 +150,7 @@ export function setupCreatePostEvents() {
                     mediaUrls = await Promise.all(selectedPostFiles.map(file => uploadToCloudinary(file)));
                 }
 
-                await addDoc(collection(db, "posts"), {
+                await addDoc(collection(db, "posts_demo"), {
                     authorUid: user ? user.uid : "",
                     author: currentUserName,
                     authorAvatarUrl: currentAvatarUrl,
@@ -224,7 +224,7 @@ function openCommentModal(postId) {
 
     if (commentUnsubscribe) commentUnsubscribe();
 
-    const commentsRef = query(collection(db, "posts", postId, "comments"), orderBy("createdAt", "asc"));
+    const commentsRef = query(collection(db, "posts_demo", postId, "comments_demo"), orderBy("createdAt", "asc"));
     commentUnsubscribe = onSnapshot(commentsRef, (snapshot) => {
         if (!commentList) return;
         commentList.innerHTML = snapshot.empty ? '<p style="text-align:center; color:#888; font-size:12px;">Chưa có bình luận nào.</p>' : '';
@@ -264,7 +264,7 @@ export function setupCommentEvents() {
             const user = auth.currentUser;
             if (!text || !activeCommentPostId || !user) return;
             try {
-                await addDoc(collection(db, "posts", activeCommentPostId, "comments"), {
+                await addDoc(collection(db, "posts_demo", activeCommentPostId, "comments_demo"), {
                     authorUid: user.uid,
                     author: currentUserName,
                     authorAvatarUrl: currentAvatarUrl || "avatar.png",
@@ -281,7 +281,7 @@ export function setupCommentEvents() {
 
 // 4. KHOẢNH KHẮC (MOMENTS)
 export function listenToMomentsRealtime() {
-    onSnapshot(query(collection(db, "moments"), orderBy("createdAt", "desc")), (snapshot) => {
+    onSnapshot(query(collection(db, "moments_demo"), orderBy("createdAt", "desc")), (snapshot) => {
         const momentsList = document.getElementById('moments-list');
         if (!momentsList) return;
         momentsList.innerHTML = '';
@@ -313,7 +313,7 @@ export function setupMomentUploadListener() {
             if (!file) return;
             try {
                 const imageUrl = await uploadToCloudinary(file);
-                await addDoc(collection(db, "moments"), { imageUrl, createdAt: serverTimestamp() });
+                await addDoc(collection(db, "moments_demo"), { imageUrl, createdAt: serverTimestamp() });
                 const toastInfo = getCustomToastInfo();
                 showToast(toastInfo.msg, toastInfo.icon);
                 e.target.value = '';
